@@ -12,19 +12,17 @@ def get_shop_info(lat: float, lng: float, count: int = 10, ) -> str:
 
 
 def create_data(responses: dict) -> dict:
-    datas = {'shops':[]}
-    for res in responses['results']['shop']:
+    datas = {'restaurants':[]}
+    for res in responses['results']['restaurants']:
         data = {
                 'id':res['id'],
                 'name':res['name'],
                 'address':res['address'],
-                'location':{
-                    'lat':res['lat'],
-                    'lng':res['lng'],
-                },
+                'lat':res['lat'],
+                'lng':res['lng'],
                 'img_url':res['logo_image'],
                 'url':res['urls']['pc'],
                 'cal':None,
                 }
-        datas['shops'].append(data)
+        datas['restaurants'].append(data)
     return datas
