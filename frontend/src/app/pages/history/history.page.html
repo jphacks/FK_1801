@@ -1,31 +1,26 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>history</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>履歴</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content no-padding>
+  <ion-card>
+    <ion-card-header class="total">
+      <div>Total</div>
+      <div>{{ total }}Kcal</div>
+    </ion-card-header>
+  </ion-card>
   <ion-list>
-    <ion-list-header>Button Item</ion-list-header>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-list-header>Button Item</ion-list-header>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-list-header>Button Item</ion-list-header>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
-    <ion-item>Hello</ion-item>
+    <!-- NOTE: Type を使って比較したい -->
+    <ion-item *ngFor="let history of histories" [routerDirection]="'root'" [routerLink]="'/search'">
+      <ion-icon slot="start" [name]="'pizza'" *ngIf="history.type === 'food'"></ion-icon>
+      <ion-icon slot="start" [name]="'walk'" *ngIf="history.type === 'excercise'"></ion-icon>
+      <ion-label>{{ history.name }}</ion-label>
+      <ion-badge item-end>{{ history.type === 'excercise' ? '-' : '' }}{{ history.calorie }}Kcal</ion-badge>
+    </ion-item>
   </ion-list>
 </ion-content>
