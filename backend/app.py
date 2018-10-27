@@ -39,11 +39,11 @@ def food():
 
     return jsonify(name=name, carorie=carorie)
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['GET'])
 def search():
-    lat = request.form['lat']
-    lng = request.form['lng']
-    count = request.form['count']
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    count = request.args.get('count')
     responese = get_shop_info(lat, lng, count)
     datas = create_data(responses)
     return jsonify(datas)
