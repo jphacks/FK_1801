@@ -126,7 +126,7 @@ export class TopPage implements OnInit {
   private async post(blob: string) {
     try {
       const response = await this.foodService.post(blob);
-      await this.databaseService.add(response.name, response.calorie);
+      await this.databaseService.eatFood(response.name, response.calorie);
     } catch (error) {
       throw error;
     } finally {

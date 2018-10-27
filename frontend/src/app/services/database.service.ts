@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import Dexie from 'dexie';
 
 import { databases, stores } from '../constants/database';
-import { Calorie } from '../models/calorie';
+import { Calorie, Type } from '../models/calorie';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +12,40 @@ export class DatabaseService {
 
   constructor() {
     this.database.version(1).stores({
-      [stores.calories]: '++id, name, calorie, timestamp'
+      [stores.calories]: '++id, name, type, calorie, timestamp'
     });
   }
 
-  public async add(name: string, calorie: number) {
+  // NOTE: 摂取したカロリーとして保存する
+  public async eatFood(name: string, calorie: number): Promise<boolean> {
     try {
       await (this.database as any).calories.add({
         name,
         calorie,
+        type: Type.food,
         timestamp: new Date().getTime()
       });
-    } catch (error) {
-      throw error;
+
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // NOTE: 消費したカロリーとして保存する
+  public async doExcercise(steps: number): Promise<boolean> {
+    try {
+      await (this.database as any).calories.add({
+        name: 'excercise',
+        // NOTE: Google Fit で 1 歩あたりの消費カロリーが 0.1Kcal だったため 0.1 にしている
+        calorie: steps * 0.1,
+        type: Type.food,
+        timestamp: new Date().getTime()
+      });
+
+      return true;
+    } catch (_) {
+      return false;
     }
   }
 
