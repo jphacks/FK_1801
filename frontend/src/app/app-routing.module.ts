@@ -6,10 +6,6 @@ const routes: Routes = [
     path: '',
     loadChildren: './pages/top/top.module#TopPageModule',
     pathMatch: 'full'
-  },
-  {
-    path: 'dummy',
-    loadChildren: './pages/dummy/dummy.module#DummyPageModule'
   }
 ];
 

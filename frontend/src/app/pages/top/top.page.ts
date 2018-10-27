@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NavController, AlertController, LoadingController, Platform } from '@ionic/angular';
+import { FoodService } from '../../services/food.service';
 
 enum CameraMode {
   Environment = 'environment',
@@ -20,12 +21,12 @@ export class TopPage implements OnInit {
   private cameraMode: CameraMode = CameraMode.Environment;
   private loading: any = null;
 
-
   constructor(
     public navCtrl: NavController,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
-    private platform: Platform
+    private platform: Platform,
+    private foodService: FoodService
   ) { }
 
   public async getStream() {
@@ -106,7 +107,7 @@ export class TopPage implements OnInit {
     const context = canvas.getContext('2d');
 
     context.drawImage(this.video.nativeElement, 0, 0, videoWidth, videoHeight);
-    this.save(canvas.toDataURL('image/png'));
+    this.post(canvas.toDataURL('image/png'));
   }
 
   /** Stream を削除する **/
@@ -115,8 +116,14 @@ export class TopPage implements OnInit {
     this.stream = null;
   }
 
-  private save(blob: string) {
-    console.log(blob);
+  private async post(blob: string) {
+    try {
+      const response = await this.foodService.post(blob);
+
+      console.log(response);
+    } catch (error) {
+      throw error;
+    }
   }
 
 }
