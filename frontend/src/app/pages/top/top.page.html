@@ -10,5 +10,15 @@
 </ion-header>
 
 <ion-content padding>
+  <div class="reverse" *ngIf="isMobile" (click)="cameraToggle()">
+    <ion-icon name="reverse-camera"></ion-icon>
+  </div>
 
+  <div class="capture" (click)="capture()">
+    <ion-icon name="camera"></ion-icon>
+  </div>
+
+  <div #camera class="camera">
+    <video #video playsinline muted autoplay></video>
+  </div>
 </ion-content>

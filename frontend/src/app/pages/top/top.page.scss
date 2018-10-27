@@ -1,0 +1,45 @@
+.menuToggle {
+  margin: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.reverse {
+  margin: 16px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.capture {
+  width: 50px;
+  height: 50px;
+  background: rgba(60, 60, 60, 1);
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  border-radius: 100%;
+  bottom: 16px;
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  margin: 0 0 0 -25px;
+}
+
+.camera {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  z-index: 1;
+
+  .character {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 50px;
+    width: 225px;
+  }
+}
