@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'history',
     loadChildren: './pages/history/history.module#HistoryPageModule'
+  },
+  {
+    path: 'search',
+    loadChildren: './pages/search/search.module#SearchPageModule'
   }
 ];
 

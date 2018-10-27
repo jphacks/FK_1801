@@ -7,5 +7,6 @@ export const url = (() => {
 })();
 
 export const endpoints = {
-  food: '/food'
+  food: '/food',
+  search: '/search'
 };
