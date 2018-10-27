@@ -5,7 +5,7 @@ import json
 def get_shop_info(lat: float, lng: float, count: int = 10, ) -> str:
     api_key = os.environ['RECRUIT_API']
 
-    url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key={}&lat={}&lng={}&range=5&order=4&count={}&format=json".format(api_key, lat, lng, count)
+    url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key={}&lat={}&lng={}&range=1&order=4&count={}&format=json".format(api_key, lat, lng, count)
 
     resp = requests.get(url).json()
     return resp
