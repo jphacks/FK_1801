@@ -79,7 +79,7 @@ export class TopPage implements OnInit {
 
   /** カメラの向きを変更する */
   public async cameraToggle() {
-    this.loading = this.loadingCtrl.create();
+    this.loading = await this.loadingCtrl.create();
     await this.loading.present();
 
     switch (this.cameraMode) {
