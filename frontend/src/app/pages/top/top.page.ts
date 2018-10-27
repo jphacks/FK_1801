@@ -29,9 +29,7 @@ export class TopPage implements OnInit {
     private platform: Platform,
     private foodService: FoodService,
     private databaseService: DatabaseService
-  ) {
-    window.t = this;
-  }
+  ) {}
 
   public async ngOnInit() {
     this.loading = await this.loadingCtrl.create();
