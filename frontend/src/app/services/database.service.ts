@@ -54,6 +54,10 @@ export class DatabaseService {
     try {
       const calories = await this.getTodayCalories();
 
+      if (calories.length === 0) {
+        return 0;
+      }
+
       return calories.map(calorie => {
         if (calorie.type === Type.excercise) {
           return 0 - calorie.calorie;
@@ -62,7 +66,7 @@ export class DatabaseService {
         return calorie.calorie;
       }).reduce((x, y) => x + y);
     } catch (_) {
-      return null;
+      return 0;
     }
   }
 
