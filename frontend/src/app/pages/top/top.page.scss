@@ -7,6 +7,7 @@
 }
 
 .reverse {
+  font-size: 24px;
   margin: 16px;
   position: fixed;
   top: 0;
@@ -19,7 +20,7 @@
   height: 50px;
   background: rgba(60, 60, 60, 1);
   text-align: center;
-  line-height: 50px;
+  line-height: 55px;
   color: #fff;
   border-radius: 100%;
   bottom: 16px;
@@ -27,6 +28,7 @@
   z-index: 3;
   left: 50%;
   margin: 0 0 0 -25px;
+  font-size: 24px;
 }
 
 .camera {
@@ -34,12 +36,4 @@
   left: 50%;
   position: fixed;
   z-index: 1;
-
-  .character {
-    position: absolute;
-    z-index: 2;
-    bottom: 0;
-    left: 50px;
-    width: 225px;
-  }
 }
