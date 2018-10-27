@@ -10,9 +10,13 @@ export class MenuComponent {
 
   public name = '';
   public menus: Menu[] = [{
-    name: 'Top',
+    name: 'トップ',
     url: '',
     icon: 'home'
+  }, {
+    name: '履歴',
+    url: '/history',
+    icon: 'list'
   }];
 
 }

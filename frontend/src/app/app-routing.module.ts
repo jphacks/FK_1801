@@ -6,6 +6,10 @@ const routes: Routes = [
     path: '',
     loadChildren: './pages/top/top.module#TopPageModule',
     pathMatch: 'full'
+  },
+  {
+    path: 'history',
+    loadChildren: './pages/history/history.module#HistoryPageModule'
   }
 ];
 
