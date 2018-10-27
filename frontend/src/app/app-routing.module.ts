@@ -4,12 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'top',
+    loadChildren: './pages/top/top.module#TopPageModule',
     pathMatch: 'full'
-  },
-  {
-    path: 'top',
-    loadChildren: './pages/top/top.module#TopPageModule'
   },
   {
     path: 'dummy',
