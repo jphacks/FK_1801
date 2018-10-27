@@ -77,10 +77,16 @@ export class DatabaseService {
   }
 
   public async getTodayCalories(): Promise<Calorie[]> {
+    return this.getCalories(0);
+  }
+
+  // NOTE: ms で差分を表現する
+  public async getCalories(difference: number): Promise<Calorie[]> {
     try {
-      const start = new Date();
+      const base = new Date().getTime() - difference;
+      const start = new Date(base);
       start.setHours(0, 0, 0, 0);
-      const end = new Date();
+      const end = new Date(base);
       end.setHours(23, 59, 59, 0);
 
       return await (this.database as any).calories
