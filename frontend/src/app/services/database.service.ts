@@ -32,7 +32,22 @@ export class DatabaseService {
   // NOTE: where と below，above を使って取得できそう（https://www.npmjs.com/package/dexie）
   public async getAll(): Promise<Calorie[]> {
     try {
-      return await (this.database as any).carories.where('id').above(0).toArray();
+      return await (this.database as any).calories.where('id').above(0).toArray();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getTodayCalorie(): Promise<Calorie[]> {
+    try {
+      const start = new Date();
+      start.setHours(0, 0, 0, 0);
+      const end = new Date();
+      end.setHours(23, 59, 59, 0);
+
+      return await (this.database as any).calories
+        .where('timestamp').above(start.getTime())
+        .and(data => data.timestamp < end.getTime()).toArray();
     } catch (error) {
       throw error;
     }

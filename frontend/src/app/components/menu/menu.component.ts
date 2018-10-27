@@ -8,7 +8,7 @@ import { Menu } from '../../models';
 })
 export class MenuComponent {
 
-  public name: string = '';
+  public name = '';
   public menus: Menu[] = [{
     name: 'Top',
     url: '',
