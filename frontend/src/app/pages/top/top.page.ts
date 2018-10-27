@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NavController, AlertController, LoadingController, Platform } from '@ionic/angular';
 import { FoodService } from '../../services/food.service';
+import { DatabaseService } from '../../services/database.service';
 
 enum CameraMode {
   Environment = 'environment',
@@ -26,10 +27,41 @@ export class TopPage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private platform: Platform,
-    private foodService: FoodService
-  ) { }
+    private foodService: FoodService,
+    private databaseService: DatabaseService
+  ) {}
 
-  public async getStream() {
+  public async ngOnInit() {
+    this.loading = await this.loadingCtrl.create();
+    await this.loading.present();
+
+    this.getStream();
+  }
+
+  public get isMobile() {
+    return this.platform.is('ios') || this.platform.is('android');
+  }
+
+  // NOTE: カメラの向きを変更する
+  public async cameraToggle() {
+    this.loading = await this.loadingCtrl.create();
+    await this.loading.present();
+
+    switch (this.cameraMode) {
+      case CameraMode.Environment:
+        this.cameraMode = CameraMode.User;
+        break;
+      case CameraMode.User:
+      default:
+        this.cameraMode = CameraMode.Environment;
+        break;
+    }
+
+    this.resetStream();
+    this.getStream();
+  }
+
+  private async getStream() {
     try {
       this.stream = await navigator.mediaDevices.getUserMedia({
         audio: false,
@@ -67,37 +99,17 @@ export class TopPage implements OnInit {
     }
   }
 
-  public async ngOnInit() {
+  // NOTE: Stream を削除する
+  private resetStream() {
+    this.video.nativeElement.srcObject = null;
+    this.stream = null;
+  }
+
+  public async capture() {
+    // NOTE: post を実行した後に非表示にする
     this.loading = await this.loadingCtrl.create();
     await this.loading.present();
 
-    this.getStream();
-  }
-
-  public get isMobile() {
-    return this.platform.is('ios') || this.platform.is('android');
-  }
-
-  /** カメラの向きを変更する */
-  public async cameraToggle() {
-    this.loading = await this.loadingCtrl.create();
-    await this.loading.present();
-
-    switch (this.cameraMode) {
-      case CameraMode.Environment:
-        this.cameraMode = CameraMode.User;
-        break;
-      case CameraMode.User:
-      default:
-        this.cameraMode = CameraMode.Environment;
-        break;
-    }
-
-    this.resetStream();
-    this.getStream();
-  }
-
-  public capture() {
     const videoWidth = this.stream.getVideoTracks()[0].getSettings().width;
     const videoHeight = this.stream.getVideoTracks()[0].getSettings().height;
 
@@ -110,19 +122,14 @@ export class TopPage implements OnInit {
     this.post(canvas.toDataURL('image/png'));
   }
 
-  /** Stream を削除する **/
-  private resetStream() {
-    this.video.nativeElement.srcObject = null;
-    this.stream = null;
-  }
-
   private async post(blob: string) {
     try {
       const response = await this.foodService.post(blob);
-
-      console.log(response);
+      await this.databaseService.add(response.name, response.calorie);
     } catch (error) {
       throw error;
+    } finally {
+      await this.loading.dismiss();
     }
   }
 
