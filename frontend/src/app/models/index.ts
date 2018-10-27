@@ -1,2 +1,2 @@
 export * from './menu';
-export * from './dummy';
+export * from './food';
