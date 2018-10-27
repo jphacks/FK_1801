@@ -10,7 +10,9 @@ export class SearchPage implements OnInit {
 
   constructor(
     private searchService: SearchService
-  ) {}
+  ) {
+    window.t = this
+  }
 
   ngOnInit() {
   }

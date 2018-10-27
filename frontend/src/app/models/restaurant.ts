@@ -9,3 +9,7 @@ export interface Restaurant {
   lng: number;
   img_url: string;
 }
+
+export interface RestaurantResponse {
+  restaurants: Restaurant[];
+}

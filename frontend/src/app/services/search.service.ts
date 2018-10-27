@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpParamsOptions } from '@angular/common/http/src/params';
 
 import { url, endpoints } from '../constants/url';
-import { Restaurant } from '../models';
+import { RestaurantResponse, Restaurant } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +19,12 @@ export class SearchService {
       count = count || 10;
       const position = { lat: latitude.toString(), lng: longitude.toString(), count: count.toString() };
       const params = new HttpParams(<HttpParamsOptions>{ fromObject: position });
-      const restaurant = await this.http.get<Restaurant[]>(
+      const restaurant = await this.http.get<RestaurantResponse>(
         `${url}${endpoints.search}`,
         { params }
       ).toPromise();
 
-      return restaurant;
+      return restaurant.restaurants;
     } catch (_) {
       return [];
     }
