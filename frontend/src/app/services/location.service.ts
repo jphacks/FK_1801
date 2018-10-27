@@ -13,9 +13,13 @@ export class LocationService {
   }
 
   public update() {
-    navigator.geolocation.getCurrentPosition(position => {
-      this.latitude = position.coords.latitude;
-      this.longitude = position.coords.longitude;
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+
+        resolve();
+      });
     });
   }
 

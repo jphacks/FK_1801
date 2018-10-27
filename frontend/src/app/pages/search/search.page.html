@@ -3,10 +3,17 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>search</ion-title>
+    <ion-title>現在地周辺</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content no-padding>
+  <ion-list>
+    <!-- NOTE: Type を使って比較したい -->
+    <ion-item *ngFor="let restaurant of restaurants" [routerDirection]="'root'" [routerLink]="'/search'">
+      <ion-icon slot="start" [name]="'restaurant'"></ion-icon>
+      <ion-label>{{ restaurant.name }}</ion-label>
+      <ion-badge item-end *ngIf="restaurant.calorie">{{ restaurant.calorie }}Kcal</ion-badge>
+    </ion-item>
+  </ion-list>
 </ion-content>
