@@ -6,7 +6,7 @@ import json
 import database
 
 from recruit_api import create_data, get_shop_info
-from vision_api import get_shop_name
+from vision_api import get_food_name
 
 app = Flask(__name__)
 CORS(app)
