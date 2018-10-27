@@ -5,7 +5,7 @@ from flask_cors import CORS
 import json
 import database
 
-from recuruit_api import create_data, get_shop_info
+from recruit_api import create_data, get_shop_info
 from vision_api import get_shop_name
 
 app = Flask(__name__)
@@ -40,7 +40,10 @@ def food():
     return jsonify(name=name, carorie=carorie)
 
 @app.route('/search', methods=['POST'])
-def search(lat, lng, count):
+def search():
+    lat = request.form['lat']
+    lng = request.form['lng']
+    count = request.form['count']
     responese = get_shop_info(lat, lng, count)
     datas = create_data(responses)
     return jsonify(datas)
