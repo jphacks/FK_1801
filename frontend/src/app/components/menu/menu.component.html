@@ -1,0 +1,9 @@
+<ion-list>
+  <ion-list-header>{{ name }}</ion-list-header>
+  <ion-menu-toggle auto-hide="false" *ngFor="let menu of menus">
+    <ion-item [routerDirection]="'root'" [routerLink]="[menu.url]">
+      <ion-icon slot="start" [name]="menu.icon" *ngIf="menu.icon"></ion-icon>
+      <ion-label>{{ menu.name }}</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+</ion-list>

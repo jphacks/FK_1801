@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    command: bash -c 'npm install && npm start -- --host=0.0.0.0'
+    env_file: ./frontend/.env.local
+    ports:
+      - '4200:4200'
+    user: node
+    volumes:
+      - ./frontend:/home/node
+    working_dir: /home/node
+
+  backend:
+    build: ./backend
+    command: bash -c 'python app.py'
+    env_file: ./backend/.env.local
+    links:
+      - redis
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./backend:/home/python
+    working_dir: /home/python
+
+  redis:
+    image: redis:5.0.0
+    command: redis-server --appendonly yes
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./database:/data
