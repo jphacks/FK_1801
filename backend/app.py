@@ -45,7 +45,7 @@ def search():
     lng = request.args.get('lng')
     count = request.args.get('count')
     responese = get_shop_info(lat, lng, count)
-    datas = create_data(responses)
+    datas = create_data(responese)
     return jsonify(datas)
 
 if __name__ == '__main__':
