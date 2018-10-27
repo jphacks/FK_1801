@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from '../../services/database.service';
+import { Calorie, Type } from '../../models/calorie';
 
 @Component({
   selector: 'app-history',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoryPage implements OnInit {
 
-  constructor() { }
+  public histories: Calorie[] = [];
+  public total: number = 0;
 
-  ngOnInit() {
+  constructor(
+    private databaseService: DatabaseService
+  ) {}
+
+  public async ngOnInit() {
+    try {
+      this.histories = await this.databaseService.getTodayCalories();
+      this.total = await this.databaseService.getTotalCalorie();
+    } catch (error) {
+      throw error;
+    }
   }
 
 }

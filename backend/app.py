@@ -35,9 +35,9 @@ def food():
     # Dummy
 
     name = 'pizza'
-    carorie = 500.0
+    calorie = 500.0
 
-    return jsonify(name=name, carorie=carorie)
+    return jsonify(name=name, calorie=calorie)
 
 @app.route('/search', methods=['GET'])
 def search():
