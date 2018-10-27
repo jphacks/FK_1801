@@ -11,7 +11,7 @@ export class MenuComponent {
   public name: string = '';
   public menus: Menu[] = [{
     name: 'Top',
-    url: '/top',
+    url: '',
     icon: 'home'
   }];
 
