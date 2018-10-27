@@ -13,9 +13,6 @@ export class MenuComponent {
     name: 'Top',
     url: '/top',
     icon: 'home'
-  }, {
-    name: 'Dummy',
-    url: '/dummy'
   }];
 
 }
