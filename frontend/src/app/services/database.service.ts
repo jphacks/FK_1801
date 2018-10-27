@@ -39,13 +39,30 @@ export class DatabaseService {
         name: 'excercise',
         // NOTE: Google Fit で 1 歩あたりの消費カロリーが 0.1Kcal だったため 0.1 にしている
         calorie: steps * 0.1,
-        type: Type.food,
+        type: Type.excercise,
         timestamp: new Date().getTime()
       });
 
       return true;
     } catch (_) {
       return false;
+    }
+  }
+
+  // NOTE: 今日の合計カロリーを取得する
+  public async getTotalCalorie(): Promise<number> {
+    try {
+      const calories = await this.getTodayCalories();
+
+      return calories.map(calorie => {
+        if (calorie.type === Type.excercise) {
+          return 0 - calorie.calorie;
+        }
+
+        return calorie.calorie;
+      }).reduce((x, y) => x + y);
+    } catch (_) {
+      return null;
     }
   }
 
@@ -59,7 +76,7 @@ export class DatabaseService {
     }
   }
 
-  public async getTodayCalorie(): Promise<Calorie[]> {
+  public async getTodayCalories(): Promise<Calorie[]> {
     try {
       const start = new Date();
       start.setHours(0, 0, 0, 0);
