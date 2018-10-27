@@ -3,11 +3,11 @@ import redis
 
 def rgetCal(data,name):
     #データベースからnameに対応するカロリーを取得
-        y = data.get(name)
-        if y:
-                return y
-        else
-                return None
+    y = data.get(name)
+    if y:
+        return y
+    else
+        return None
 
 def translate(phrase):
     # Glosbe API により、引数に与えられた単語の翻訳を取得                                                                                                                
