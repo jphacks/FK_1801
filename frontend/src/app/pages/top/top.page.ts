@@ -61,6 +61,7 @@ export class TopPage implements OnInit {
     this.getStream();
   }
 
+  // TODO: コンポーネント化する
   private async getStream() {
     try {
       this.stream = await navigator.mediaDevices.getUserMedia({
