@@ -23,7 +23,8 @@ def create_data(responses: dict) -> dict:
                     'lng':res['lng'],
                 },
                 'img_url':res['logo_image'],
-                'url':res['urls']['pc']
+                'url':res['urls']['pc'],
+                'cal':None,
                 }
         datas['shops'].append(data)
     return datas
