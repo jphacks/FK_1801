@@ -58,7 +58,7 @@ export class SearchPage implements OnInit {
   private shakeListener() {
     this.steps++;
 
-    if (this.steps >= 100) {
+    if (this.steps >= 5) {
       this.databaseService.doExcercise(this.steps);
       this.steps = 0;
     }
