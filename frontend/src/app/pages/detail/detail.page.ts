@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NavController, AlertController, LoadingController, Platform } from '@ionic/angular';
 import { FoodService } from '../../services/food.service';
 import { DatabaseService } from '../../services/database.service';
+import { TemporalService } from '../../services/temporal.service';
+import { Restaurant } from '../../models';
 
 enum CameraMode {
   Environment = 'environment',
@@ -9,11 +11,11 @@ enum CameraMode {
 }
 
 @Component({
-  selector: 'app-top',
-  templateUrl: './top.page.html',
-  styleUrls: ['./top.page.scss'],
+  selector: 'app-detail',
+  templateUrl: './detail.page.html',
+  styleUrls: ['./detail.page.scss'],
 })
-export class TopPage implements OnInit {
+export class DetailPage implements OnInit {
 
   @ViewChild('camera') camera: ElementRef;
   @ViewChild('video') video: ElementRef;
@@ -22,14 +24,19 @@ export class TopPage implements OnInit {
   private cameraMode: CameraMode = CameraMode.Environment;
   private loading: any = null;
 
+  private restaurant: Restaurant;
+
   constructor(
     public navCtrl: NavController,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private platform: Platform,
     private foodService: FoodService,
-    private databaseService: DatabaseService
-  ) {}
+    private databaseService: DatabaseService,
+    private temporalService: TemporalService
+  ) {
+    this.restaurant = this.temporalService.get();
+  }
 
   public async ngOnInit() {
     this.loading = await this.loadingCtrl.create();
@@ -125,7 +132,7 @@ export class TopPage implements OnInit {
 
   private async post(blob: string) {
     try {
-      const response = await this.foodService.post(blob);
+      const response = await this.foodService.post(this.restaurant.id, blob);
       await this.databaseService.eatFood(response.name, response.calorie);
     } catch (error) {
       throw error;
