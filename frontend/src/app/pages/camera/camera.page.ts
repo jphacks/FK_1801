@@ -20,11 +20,10 @@ export class CameraPage implements OnInit {
   @ViewChild('camera') camera: ElementRef;
   @ViewChild('video') video: ElementRef;
 
+  public restaurant: Restaurant;
   public stream: MediaStream | null = null;
   private cameraMode: CameraMode = CameraMode.Environment;
   private loading: any = null;
-
-  private restaurant: Restaurant;
 
   constructor(
     public navCtrl: NavController,
