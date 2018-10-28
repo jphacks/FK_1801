@@ -7,15 +7,15 @@ from base64 import b64encode
 
 ENDPOINT_URL = 'https://vision.googleapis.com/v1/images:annotate'
 
-def get_food_name(img_bin: bytes) -> str:
+def get_food_name(b64_text: bytes) -> str:
     api_key = os.environ['VISION_API']
     img_requests = []
-    text = img_bin.decode()
+    text = b64_text.decode()
     img_requests.append({
             'image': {'content': text},
             'features': [{
                 'type': 'LABEL_DETECTION',
-                'maxResults': 1
+                'maxResults': 10
             }]
     })
 
@@ -24,5 +24,7 @@ def get_food_name(img_bin: bytes) -> str:
                              params={'key': api_key},
                              headers={'Content-Type': 'application/json'})
 
-    resp = response.json()['responses'][0]['labelAnnotations'][0]['description']
-    return resp
+    resps = []
+    for resp in response.json()['responses'][0]['labelAnnotations']:
+        resps.append(resp['description'])
+    return resps
