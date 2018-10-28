@@ -19,7 +19,7 @@
   </ion-card>
   <ion-list>
     <!-- NOTE: Type を使って比較したい -->
-    <ion-item *ngFor="let history of histories" [routerDirection]="'root'" [routerLink]="'/search'">
+    <ion-item *ngFor="let history of histories">
       <ion-icon slot="start" [name]="'pizza'" *ngIf="history.type === 'food'"></ion-icon>
       <ion-icon slot="start" [name]="'walk'" *ngIf="history.type === 'excercise'"></ion-icon>
       <ion-label>{{ history.name }}</ion-label>
