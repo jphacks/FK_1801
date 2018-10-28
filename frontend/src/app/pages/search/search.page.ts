@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { SearchService } from '../../services/search.service';
 import { LocationService } from '../../services/location.service';
+import { TemporalService } from '../../services/temporal.service';
 import { DatabaseService } from '../../services/database.service';
 import { Restaurant } from '../../models';
 
@@ -19,14 +20,21 @@ export class SearchPage implements OnInit {
   public restOfCalorie: number;
 
   constructor(
+    private navCtrl: NavController,
     private alertCtrl: AlertController,
     private searchService: SearchService,
+    private temporalService: TemporalService,
     private locationService: LocationService,
     private databaseService: DatabaseService
   ) {}
 
   public ngOnInit() {
     this.update();
+  }
+
+  public open(restaurant: Restaurant) {
+    this.temporalService.set(restaurant);
+    this.navCtrl.navigateForward('/detail')
   }
 
   private async update() {

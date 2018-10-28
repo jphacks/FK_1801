@@ -4,12 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './pages/top/top.module#TopPageModule',
+    loadChildren: './pages/history/history.module#HistoryPageModule',
     pathMatch: 'full'
   },
   {
-    path: 'history',
-    loadChildren: './pages/history/history.module#HistoryPageModule'
+    path: 'detail',
+    loadChildren: './pages/detail/detail.module#DetailPageModule'
   },
   {
     path: 'search',

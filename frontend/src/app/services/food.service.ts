@@ -13,11 +13,11 @@ export class FoodService {
     private http: HttpClient
   ) {}
 
-  public async post(blob: string): Promise<Food> {
+  public async post(id: string, blob: string): Promise<Food> {
     try {
       const food = await this.http.post<Food>(
         `${url}${endpoints.food}`,
-        { blob }
+        { id, blob }
       ).toPromise();
 
       return food;
