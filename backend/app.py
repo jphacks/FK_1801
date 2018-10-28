@@ -38,7 +38,7 @@ def food():
     for key in response:
         calorie = redis.get(key)
         if calorie != '':
-            return jsonify(name=translate(key), calorie=calorie.decode('utf-8'))
+            return jsonify(name=key, calorie=calorie.decode('utf-8'))
 
     # Dummy
 
