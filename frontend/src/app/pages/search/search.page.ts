@@ -5,7 +5,7 @@ import { LocationService } from '../../services/location.service';
 import { TemporalService } from '../../services/temporal.service';
 import { DatabaseService } from '../../services/database.service';
 import { Restaurant } from '../../models';
-import Shake from 'shake.js';
+import { gravityMin, gravityMax } from '../../constants/measurement';
 
 @Component({
   selector: 'app-search',
@@ -20,9 +20,12 @@ export class SearchPage implements OnInit {
 
   public restOfCalorie: number;
 
-  private shake: Shake;
   private listener: any;
   private steps = 0;
+  private isStep = false;
+
+  // NOTE: デバイスの動きを取得するかどうか
+  private isCaptureMotion: boolean = false;
 
   constructor(
     private navCtrl: NavController,
@@ -32,35 +35,43 @@ export class SearchPage implements OnInit {
     private locationService: LocationService,
     private databaseService: DatabaseService
   ) {
-    this.shake = new Shake({
-      threshold: 15
-    });
-
-    this.listener = this.shakeListener.bind(this);
-    (window as any).addEventListener('shake', this.listener, false);
+    this.listener = this.devicemotion.bind(this);
+    (window as any).addEventListener('devicemotion', this.listener, false);
   }
 
   public ngOnInit() {
     this.update();
-    this.shake.start();
   }
 
   public open(restaurant: Restaurant) {
-    this.shake.stop();
     this.temporalService.set(restaurant);
     this.navCtrl.navigateForward('/detail');
+    this.isCaptureMotion = false;
   }
 
   public ionViewDidEnter() {
-    this.shake.start();
+    this.isCaptureMotion = true;
   }
 
-  private shakeListener() {
-    this.steps++;
+  private devicemotion(event) {
+    event.preventDefault();
 
-    if (this.steps >= 5) {
-      this.databaseService.doExcercise(this.steps);
-      this.steps = 0;
+    const a = event.accelerationIncludingGravity;
+    const accumulator = Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+
+    if (this.isStep) {
+      if (accumulator < gravityMin) {
+        this.steps++;
+        this.isStep = false;
+      }
+
+      if (this.steps >= 100) {
+        this.databaseService.doExcercise(this.steps);
+      }
+    } else {
+      if (accumulator > gravityMax) {
+        this.isStep = true;
+      }
     }
   }
 

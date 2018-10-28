@@ -14,12 +14,19 @@ export class LocationService {
 
   public update() {
     return new Promise((resolve) => {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
 
-        resolve();
-      });
+      // NOTE: デモのため決め打ちで位置情報を返す
+      this.latitude = 33.5903689;
+      this.longitude = 130.4239637;
+
+      resolve();
+
+      // navigator.geolocation.getCurrentPosition(position => {
+      //   this.latitude = position.coords.latitude;
+      //   this.longitude = position.coords.longitude;
+      //
+      //   resolve();
+      // });
     });
   }
 

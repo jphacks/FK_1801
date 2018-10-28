@@ -17,10 +17,6 @@ export class MenuComponent {
     name: '検索',
     url: '/search',
     icon: 'search'
-  }, {
-    name: '履歴',
-    url: '/history',
-    icon: 'list'
   }];
 
 }
