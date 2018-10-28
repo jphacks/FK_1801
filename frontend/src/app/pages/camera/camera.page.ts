@@ -137,16 +137,15 @@ export class CameraPage implements OnInit {
       const alert = await this.alertCtrl.create({
         header: '保存しました',
         buttons: ['OK']
-      })
+      });
 
       await alert.present();
-
-      // 保存後にトップページに戻る
-      this.navCtrl.navigateForward('/');
     } catch (error) {
       throw error;
     } finally {
       await this.loading.dismiss();
+      // 保存後にトップページに戻る
+      this.navCtrl.navigateForward('/');
     }
   }
 
