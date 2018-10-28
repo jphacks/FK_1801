@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ restaurant.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding>
+  <div class="reverse" *ngIf="isMobile" (click)="cameraToggle()">
+    <ion-icon name="reverse-camera"></ion-icon>
+  </div>
+
+  <div class="capture" (click)="capture()">
+    <ion-icon name="camera"></ion-icon>
+  </div>
+
+  <div #camera class="camera">
+    <video #video playsinline muted autoplay></video>
+  </div>
+</ion-content>

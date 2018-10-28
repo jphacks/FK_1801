@@ -10,7 +10,10 @@
 <ion-content no-padding>
   <ion-card>
     <ion-card-header class="total">
-      <div>Total</div>
+      <div>
+        <ion-icon slot="start" [name]="'sad'" *ngIf="total - calorie > 0"></ion-icon>
+        <ion-icon slot="start" [name]="'happy'" *ngIf="total - calorie <= 0"></ion-icon>
+      </div>
       <div>{{ total }}Kcal / {{ calorie }}Kcal</div>
     </ion-card-header>
   </ion-card>

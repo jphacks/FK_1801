@@ -1,17 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ restaurant.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content no-padding>
-  <div class="menuToggle">
-    <ion-menu-button></ion-menu-button>
-  </div>
-
-  <div class="reverse" *ngIf="isMobile" (click)="cameraToggle()">
-    <ion-icon name="reverse-camera"></ion-icon>
-  </div>
-
-  <div class="capture" (click)="capture()">
-    <ion-icon name="camera"></ion-icon>
-  </div>
-
-  <div #camera class="camera">
-    <video #video playsinline muted autoplay></video>
-  </div>
+  <ion-card>
+    <ion-card-header class="total">
+      <div><img src="{{ restaurant.img_url }}" /></div>
+    </ion-card-header>
+  </ion-card>
+  <ion-list>
+    <!-- NOTE: Type を使って比較したい -->
+    <ion-item (click)="openCamera()">
+      <ion-icon slot="start" [name]="'camera'"></ion-icon>
+      <ion-label>食べる</ion-label>
+    </ion-item>
+    <a href="{{ restaurant.url }}">
+      <ion-item>
+        <ion-icon slot="start" [name]="'home'"></ion-icon>
+        <ion-label>お店のページを開く</ion-label>
+      </ion-item>
+    </a>
+  </ion-list>
 </ion-content>

@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: './pages/search/search.module#SearchPageModule'
+  },
+  {
+    path: 'camera',
+    loadChildren: './pages/camera/camera.module#CameraPageModule'
   }
 ];
 
