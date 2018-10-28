@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/calmery/elm-template.svg?style=svg)](https://circleci.com/gh/calmery/elm-template)
 
-[![Product Name](https://img.youtube.com/vi/FbIP_orlYIs/0.jpg)](https://youtu.be/FbIP_orlYIs)
+[![Product Name](https://img.youtube.com/vi/915kvFsF1DE/0.jpg)](https://youtu.be/915kvFsF1DE)
 
 ## 製品概要
 ### Calorie X Tech
