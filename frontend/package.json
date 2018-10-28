@@ -26,6 +26,7 @@
     "core-js": "^2.5.3",
     "dexie": "^2.0.4",
     "rxjs": "6.2.2",
+    "shake.js": "^1.2.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
