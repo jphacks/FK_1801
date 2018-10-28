@@ -5,6 +5,7 @@ import { LocationService } from '../../services/location.service';
 import { TemporalService } from '../../services/temporal.service';
 import { DatabaseService } from '../../services/database.service';
 import { Restaurant } from '../../models';
+import Shake from 'shake.js';
 
 @Component({
   selector: 'app-search',
@@ -19,6 +20,10 @@ export class SearchPage implements OnInit {
 
   public restOfCalorie: number;
 
+  private shake: Shake;
+  private listener: any;
+  private steps = 0;
+
   constructor(
     private navCtrl: NavController,
     private alertCtrl: AlertController,
@@ -26,15 +31,37 @@ export class SearchPage implements OnInit {
     private temporalService: TemporalService,
     private locationService: LocationService,
     private databaseService: DatabaseService
-  ) {}
+  ) {
+    this.shake = new Shake({
+      threshold: 15
+    });
+
+    this.listener = this.shakeListener.bind(this);
+    (window as any).addEventListener('shake', this.listener, false);
+  }
 
   public ngOnInit() {
     this.update();
+    this.shake.start();
   }
 
   public open(restaurant: Restaurant) {
+    this.shake.stop();
     this.temporalService.set(restaurant);
-    this.navCtrl.navigateForward('/detail')
+    this.navCtrl.navigateForward('/detail');
+  }
+
+  public ionViewDidEnter() {
+    this.shake.start();
+  }
+
+  private shakeListener() {
+    this.steps++;
+
+    if (this.steps >= 5) {
+      this.databaseService.doExcercise(this.steps);
+      this.steps = 0;
+    }
   }
 
   private async update() {
