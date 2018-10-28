@@ -54,23 +54,26 @@ export class SearchPage implements OnInit {
   }
 
   private devicemotion(event) {
-    event.preventDefault();
+    if (this.isCaptureMotion) {
+      event.preventDefault();
 
-    const a = event.accelerationIncludingGravity;
-    const accumulator = Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+      const a = event.accelerationIncludingGravity;
+      const accumulator = Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
 
-    if (this.isStep) {
-      if (accumulator < gravityMin) {
-        this.steps++;
-        this.isStep = false;
-      }
+      if (this.isStep) {
+        if (accumulator < gravityMin) {
+          this.steps++;
+          this.isStep = false;
+        }
 
-      if (this.steps >= 100) {
-        this.databaseService.doExcercise(this.steps);
-      }
-    } else {
-      if (accumulator > gravityMax) {
-        this.isStep = true;
+        if (this.steps >= 100) {
+          this.databaseService.doExcercise(this.steps);
+          this.steps = 0;
+        }
+      } else {
+        if (accumulator > gravityMax) {
+          this.isStep = true;
+        }
       }
     }
   }
