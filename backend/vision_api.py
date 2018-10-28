@@ -10,7 +10,7 @@ ENDPOINT_URL = 'https://vision.googleapis.com/v1/images:annotate'
 def get_food_name(b64_text: bytes) -> str:
     api_key = os.environ['VISION_API']
     img_requests = []
-    text = b64_text.decode()
+    text = b64_text
     img_requests.append({
             'image': {'content': text},
             'features': [{
