@@ -1,1 +1,0 @@
-npm uninsta  shake.js
