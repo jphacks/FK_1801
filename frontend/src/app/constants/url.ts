@@ -3,7 +3,7 @@ export const url = (() => {
     return 'https://fk-1801.herokuapp.com';
   }
 
-  return 'http://172.20.10.7:5000';
+  return 'http://localhost:5000';
 })();
 
 export const endpoints = {
