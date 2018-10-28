@@ -29,23 +29,22 @@ def dummy():
 
 @app.route('/food', methods=['POST'])
 def food():
-    parameters = json.loads(request.data.decode('utf-8'))
-    blob = parameters['blob']
-
-    # Dummy
-
-    name = 'pizza'
-    carorie = 500.0
-
-    return jsonify(name=name, carorie=carorie)
+    shop_id = request.form('id')
+    b64_text = request.form('blob')
+    response = get_food_name(b64_text)
+    for key in redis.keys():
+        if redis.get(key) in response:
+            cal = redis.get(key)
+            redis.set(shop_id, cal)
+            return cals
 
 @app.route('/search', methods=['GET'])
 def search():
     lat = request.args.get('lat')
     lng = request.args.get('lng')
     count = request.args.get('count')
-    responese = get_shop_info(lat, lng, count)
-    datas = create_data(responese)
+    response = get_shop_info(lat, lng, count)
+    datas = create_data(response)
     return jsonify(datas)
 
 if __name__ == '__main__':
