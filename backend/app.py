@@ -30,14 +30,19 @@ def dummy():
 @app.route('/food', methods=['POST'])
 def food():
     parameters = json.loads(request.data.decode('utf-8'))
-    blob = parameters['blob']
+    id = parameters['id']
+    blob = parameters['blob'].replace('data:image/png;base64,', '')
+
+    response = get_food_name(blob)
+
+    for key in response:
+        calorie = redis.get(key)
+        if calorie != '':
+            return jsonify(name=translate(key), calorie=calorie.decode('utf-8'))
 
     # Dummy
 
-    name = 'pizza'
-    calorie = 500.0
-
-    return jsonify(name=name, calorie=calorie)
+    return jsonify(name="pizza", calorie=500.0)
 
 @app.route('/search', methods=['GET'])
 def search():
