@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { SearchService } from '../../services/search.service';
 import { LocationService } from '../../services/location.service';
+import { DatabaseService } from '../../services/database.service';
 import { Restaurant } from '../../models';
 
 @Component({
@@ -15,10 +16,13 @@ export class SearchPage implements OnInit {
   public highCalorieRestaurants: Restaurant[] = []; // NOTE: 一日の摂取カロリーを超えるお店のリストを持つ
   public unknownCalorieRestaurants: Restaurant[] = []; // NOTE: カロリー値が未定のお店のリストを持つ
 
+  public restOfCalorie: number;
+
   constructor(
     private alertCtrl: AlertController,
     private searchService: SearchService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private databaseService: DatabaseService
   ) {}
 
   public ngOnInit() {
@@ -27,11 +31,32 @@ export class SearchPage implements OnInit {
 
   private async update() {
     try {
+      // 現在の残りカロリー値を取得する
+      const restOfCalorie = await this.databaseService.getRestOfCalorie();
+      this.restOfCalorie = restOfCalorie;
+
       await this.locationService.update();
       const latitude = this.locationService.getLatitude();
       const longitude = this.locationService.getLongitude();
 
-      this.restaurants = await this.searchService.get(latitude, longitude);
+      const restaurants = await this.searchService.get(latitude, longitude);
+
+      // 差分出して振り分ける
+
+      restaurants.forEach(restaurant => {
+        if (restaurant.cal === null) {
+          this.unknownCalorieRestaurants.push(restaurant);
+          return;
+        }
+
+        if (restOfCalorie - restaurant.cal > 0) {
+          this.restaurants.push(restaurant);
+          return;
+        }
+
+        // NOTE: 食べると残りカロリー数が超過するお店を持つ
+        this.highCalorieRestaurants.push(restaurant);
+      });
     } catch (error) {
       const alert = await this.alertCtrl.create({
         header: '読み込みに失敗しました',

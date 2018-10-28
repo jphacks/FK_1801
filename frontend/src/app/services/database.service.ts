@@ -3,6 +3,7 @@ import Dexie from 'dexie';
 
 import { databases, stores } from '../constants/database';
 import { Calorie, Type } from '../models/calorie';
+import { calorie } from '../constants/calorie';
 
 @Injectable({
   providedIn: 'root'
@@ -82,6 +83,17 @@ export class DatabaseService {
 
   public async getTodayCalories(): Promise<Calorie[]> {
     return this.getCalories(0);
+  }
+
+  // NOTE: 今日の残りの摂取可能なカロリーを返す
+  public async getRestOfCalorie(): Promise<number> {
+    try {
+      const todayCalorie = await this.getTotalCalorie();
+
+      return calorie - todayCalorie;
+    } catch (_) {
+      return null;
+    }
   }
 
   // NOTE: ms で差分を表現する
